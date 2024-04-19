@@ -10,15 +10,5 @@
     } catch (PDOException $pe) {
         die("Could not connect to the database $dbname :" . $pe->getMessage());
     }
-    echo('<html>
-    <head>
-    <meta charset="utf-8">
-    </head>
-    <body>');
-    $result = $conn->query("SELECT 'Login' FROM users WHERE 'Name' = 'Иван'");
-    while ($row = $result->fetch(PDO::FETCH_ASSOC)){
-        echo "<p>{$row['Login']}</p>";
-    }
-    echo('</body>
-    </html>');
+    echo "Connect YES";
 ?>

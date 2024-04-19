@@ -22,11 +22,18 @@
         exit("Вы ввели не всю информацию, вернитесь назад и заполните все поля!");
     }
     include("dbconnect.php");
-    $result = $conn->query("SELECT ID FROM users WHERE login = '$login'");
-    $row = $result->fetch_assoc();
-    if (!empty($row)) {
-        exit("Введенный вами догин уже зарегистрирован. Введите другой логин.");
+    PDO::PARAM_INT($result);
+    $result = $conn->query("SELECT \"ID\" FROM users WHERE \"Login\" = '$login'");
+    $row = $result->fetch(PDO::FETCH_ASSOC);
+    if (!empty($row['__id'])) {
+        exit ("Ввыеденный вами логин уже зарегистрирован. Введите другой логин.");
     }
-    $result2 = $conn->query("INSERT INTO users (Name, Login, Pass) VALUES('$name', '$login', '$pass')");
-    
+    $result2 = $row->query("INSERT INTO users (Name, Login, Pass) VALUES('$name', '$login', '$pass')");
+
+    if ($result2 == 'TRUE') {
+        echo "Вы успешно зарегистрированы! Теперь вы можете зайти на сайт под своим именем. <a href = 'index.php'>Главная страница</a>";
+    }
+    else {
+        echo "Ошибка! Вы не зарегистрированы.";
+    }
 ?>
